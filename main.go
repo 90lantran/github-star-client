@@ -8,23 +8,30 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"regexp"
 
 	"github.com/akamensky/argparse"
 )
 
+func validateInput(args []string) error {
+	var validInput = regexp.MustCompile(`^[a-zA-Z0-9\_\-]+\/[a-zA-Z0-9\_\-]+$`)
+	for _, arg := range args {
+		if !validInput.MatchString(arg) {
+			return fmt.Errorf("Input %s is not valid. Valid format is organization/repository", arg)
+		}
+	}
+
+	return nil
+}
+
 func main() {
+
+	//go run main.go  -r golang/go -r tinygo-org/tinygo-site -r golang/g
 
 	// Create new parser object
 	parser := argparse.NewParser("main", "Sends a request and Receives a response from github-star server")
 
-	// // give it verbose flag
-	// verbose := parser.Flag(
-	// 	"", "verbose", &argparse.Options{
-	// 		Help: "Verbose mode",
-	// 	},
-	// )
-
-	s := parser.StringList("r", "request", &argparse.Options{Required: true, Help: "List of organization/repossitory to send to server"})
+	s := parser.StringList("r", "request", &argparse.Options{Required: true, Help: "List of organization/repossitory to send to server", Validate: validateInput})
 	// Create string flag
 	//s := parser.String("r", "request", &argparse.Options{Required: true, Help: "Json Payload to send to server"})
 	// Parse input
