@@ -65,5 +65,3 @@ $ make unit-test
 ```
 $ make code-coverage
 ```
-
-
