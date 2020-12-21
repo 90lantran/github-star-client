@@ -52,7 +52,32 @@ Response: {
 }
 ```
 
-If github-stars server runs at localhost, you `should not` specify -t flag. This option is useful when you deploy github-stars sever to minikube, you can pass in the ip and port of minikube to test it.
+If github-stars server runs at localhost, you `should not` specify -t flag. This option is useful when you deploy github-stars sever to minikube, you can pass in the ip and port of minikube to test it. Here is an example.
+
+```
+$ ./client -r tinygo-org/tinygo-site,golang/go -r 4534/433 -t http://192.168.99.107:30000
+input list: {Input:[tinygo-org/tinygo-site golang/go 4534/433]}
+Response: {
+  "payload": {
+    "totalStars": 80032,
+    "invalidRepos": [
+      "4534/433"
+    ],
+    "validRepos": [
+      {
+        "name": "tinygo-org/tinygo-site",
+        "star(s)": 22
+      },
+      {
+        "name": "golang/go",
+        "star(s)": 80010
+      }
+    ]
+  },
+  "error": "At least one of the input is not valid",
+  "status": "success"
+}
+```
 
 ### 3.Input validation
 I found a fun thing about github naming convention for repository name. Valid inputs contains number, character, dash(-), underscore(_), dot(.). If you type in comma(,), spaces, any special characters, they will be converted to dash(-). For example: @me will be -me. That is how I wrote my regular expression for input list.
