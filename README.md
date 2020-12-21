@@ -1,5 +1,5 @@
 # github-star-client
-This is a simple Go http client to send a POST request, and receive a response for [github-stars](https://github.com/90lantran/github-star) server.
+This is a simple Go http client to send a POST request, and receive a response for [github-star](https://github.com/90lantran/github-star) server.
 The client will take in a list of organization/reposiotry, server host `http://ip:port` (default http://localhost:8080) from command line, and print out the response from server or any internal client error. More details about input validation is [here](#2.input).
 
 ## Usage
@@ -52,7 +52,7 @@ Response: {
 }
 ```
 
-If github-stars server runs at localhost, you `should not` specify -t flag. This option is useful when you deploy github-stars sever to minikube, you can pass in the ip and port of minikube to test it. Here is an example.
+If github-star server runs at localhost, you `should not` specify -t flag. This option is useful when you deploy github-star sever to minikube, you can pass in the ip and port of minikube to test it. Here is an example.
 
 ```
 $ ./client -r tinygo-org/tinygo-site,golang/go -r 4534/433 -t http://192.168.99.107:30000
@@ -80,10 +80,10 @@ Response: {
 ```
 
 ### 3.Input validation
-I found a fun thing about github naming convention for repository name. Valid inputs contains number, character, dash(-), underscore(_), dot(.). If you type in comma(,), spaces, any special characters, they will be converted to dash(-). For example: @me will be -me. That is how I wrote my regular expression for input list.
+I found a fun thing about github naming convention for repository name. Valid inputs contains numbers, characters, dashes(-), underscores(_), dots(.). If you type in comma(,), whitespace, any special characters, they will be converted to dash(-). For example: @me will be -me. That is how I wrote my regular expression for input list.
 
 ## Unit test
-unit-test were written with go test.
+unit-test was written with go test.
 
 - To run unit-test: 
 ```
