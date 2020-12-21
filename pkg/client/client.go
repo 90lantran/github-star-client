@@ -103,7 +103,7 @@ func ShowResponse(resp *http.Response) (err error) {
 		return err
 	}
 	// pretty print json response
-	responseJSON, err := json.Marshal(userResponse)
+	responseJSON, err := json.MarshalIndent(userResponse, "", "  ")
 	if err != nil {
 		return err
 	}

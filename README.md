@@ -31,6 +31,22 @@ Arguments:
 Example: client takes in multiple lists
 ```
 $ ./client -r me/e,teori/23423 -r 324324/43 -r golang/go
+input list: {Input:[me/e teori/23423 324324/43 golang/go]}
+Response: {
+  "totalStars": 79997,
+  "invalidRepos": [
+    "me/e",
+    "teori/23423",
+    "324324/43"
+  ],
+  "validRepos": [
+    {
+      "name": "golang/go",
+      "star(s)": 79997
+    }
+  ],
+  "status": "success"
+}
 ```
 
 If github-stars server runs at localhost, you should not specify -t flag. This option is useful when you deploy github-stars sever to minikube, you can pass in the ip and port of minikube to test it.
