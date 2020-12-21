@@ -30,7 +30,7 @@ func TestValidationHostAndPort(t *testing.T) {
 	assert.Nil(t, err)
 }
 
-func TestDoStuffWithTestServer(t *testing.T) {
+func TestFunctionalityOfClient(t *testing.T) {
 	// Start a local HTTP server
 	server := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
 		assert.Contains(t, req.URL.String(), "/get-stars")
