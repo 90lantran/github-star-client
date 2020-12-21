@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"regexp"
 	"strings"
@@ -74,14 +73,11 @@ func CreatePostRequest(argList *[]string, baseURL *string) (req *http.Request, e
 
 	jsonStr, err := json.Marshal(userRequest)
 	if err != nil {
-		log.Printf("cannot marshall request %v\n", err)
-		return
+		return nil, err
 	}
 	req, err = http.NewRequest("POST", *baseURL+"/get-stars", bytes.NewBuffer(jsonStr))
 	if err != nil {
-		log.Printf("cannot create a POST request %v\n", err)
-		return
-
+		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/json")
 	return req, nil
