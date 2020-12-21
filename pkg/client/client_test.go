@@ -28,7 +28,6 @@ func TestValidationHostAndPort(t *testing.T) {
 	host = []string{"http://127.0.0.1:8080"}
 	err = ValidateHostAndPort(host)
 	assert.Nil(t, err)
-
 }
 
 func TestDoStuffWithTestServer(t *testing.T) {

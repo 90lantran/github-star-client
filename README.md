@@ -1,12 +1,53 @@
 # github-star-client
+This is a simple Go http client to work with github-star server.
+The client will take in a list of organization/reposiotry, server host http://ip:port (default http://localhost:8080) from command line, and print out the response from server or any internal client error. More details about input validation is [here](#2.input).
 
-go run client.go  -r golang/go -r tinygo-org/tinygo-site -r golang/g
+## Usage
+### 1.Build client
+```
+$ make build
+```
+client should be created at root directory
 
-Naming covention of organization and repository in github:
-number, character, dash(-), underscore(_), dot(.), 
-comma(,) and spaces Any special character will be convert to dash(-). For example: @me will be -me
+### 2.Input
+Command line arguments are handled by argparser from [akamensky]("https://github.com/akamensky/argparse").
+This client supports 2: -r for input list, -t host and port.
+
+```
+$ ./client -h 
+usage: client [-h|--help] -r|--request "<value>" [-r|--request "<value>" ...]
+              [-t|--host "<value>"]
+
+              sends a request and receives a response from github-star server
+
+Arguments:
+
+  -h  --help     Print help information
+  -r  --request  List of organization/repossitory to send to server.
+  -t  --host     IP address and port of the server. Default:
+                 http://localhost:8080
+```
+
+Example: client takes in multiple lists
+```
+$ ./client -r me/e,teori/23423 -r 324324/43 -r golang/go
+```
+
+If github-stars server runs at localhost, you should not specify -t flag. This option is useful when you deploy github-stars sever to minikube, you can pass in the ip and port of minikube to test it.
+
+### 3.Input validation
+I found a fun thing about github naming convention for repository name. Valid inputs contains number, character, dash(-), underscore(_), dot(.). If you type in comma(,), spaces, any special characters, they will be converted to dash(-). For example: @me will be -me. That is how I wrote my regular expression for input list.
+
+## Unit test
+unit-test were written with go test.
+
+- To run unit-test: 
+```
+$ make unit-test 
+```
+- To show code-coverage:
+```
+$ make code-coverage
+```
 
 
-go test ./... -coverprofile cover.out
-
-go tool cover -html=cover.out
