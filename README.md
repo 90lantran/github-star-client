@@ -11,7 +11,7 @@ client should be created at root directory
 
 ### 2.Input
 Command line arguments are handled by argparser from [akamensky]("https://github.com/akamensky/argparse").
-This client supports 2: -r for input list, -t host and port.
+This client supports 2 flags: -r for input list, -t host and port.
 
 ```
 $ ./client -h 
@@ -33,18 +33,21 @@ Example: client takes in multiple lists
 $ ./client -r me/e,teori/23423 -r 324324/43 -r golang/go
 input list: {Input:[me/e teori/23423 324324/43 golang/go]}
 Response: {
-  "totalStars": 79997,
-  "invalidRepos": [
-    "me/e",
-    "teori/23423",
-    "324324/43"
-  ],
-  "validRepos": [
-    {
-      "name": "golang/go",
-      "star(s)": 79997
-    }
-  ],
+  "payload": {
+    "totalStars": 79999,
+    "invalidRepos": [
+      "me/e",
+      "teori/23423",
+      "324324/43"
+    ],
+    "validRepos": [
+      {
+        "name": "golang/go",
+        "star(s)": 79999
+      }
+    ]
+  },
+  "error": "At least one of the input is not valid",
   "status": "success"
 }
 ```
@@ -59,7 +62,9 @@ unit-test were written with go test.
 
 - To run unit-test: 
 ```
-$ make unit-test 
+$ make unit-test
+cd pkg/client && go test ./... -coverprofile cover.out
+ok      github.com/90lantran/github-star-client/pkg/client      0.019s  coverage: 81.8% of statements 
 ```
 - To show code-coverage:
 ```

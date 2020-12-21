@@ -21,16 +21,19 @@ type UserRequest struct {
 }
 
 type UserResponse struct {
+	Pl     *Payload `json:"payload,omitempty"`
+	Error  string   `json:"error,omitempty"`
+	Status string   `json:"status" validate:"required"`
+}
+type Payload struct {
 	TotalStars   int64         `json:"totalStars,omitempty"`
 	InvalidRepos []string      `json:"invalidRepos,omitempty"`
 	ValidRepos   []MapNameStar `json:"validRepos,omitempty"`
-	Error        string        `json:"error,omitempty"`
-	Status       string        `json:"status"`
 }
 
 type MapNameStar struct {
-	Name string `json:"name,omitempty"`
-	Star int64  `json:"star(s),omitempty"`
+	Name string `json:"name"`
+	Star int64  `json:"star(s)"`
 }
 
 func ValidateListInput(list []string) error {

@@ -38,12 +38,15 @@ func TestDoStuffWithTestServer(t *testing.T) {
 			Name: "golang/go",
 			Star: 5,
 		}
-		userResponse := UserResponse{
+		payload := Payload{
 			TotalStars:   5,
 			InvalidRepos: []string{"golang/o"},
 			ValidRepos:   []MapNameStar{mapNameStar},
-			Error:        "no error",
-			Status:       "good",
+		}
+		userResponse := UserResponse{
+			Pl:     &payload,
+			Error:  "no error",
+			Status: "good",
 		}
 		jsonData, err := json.Marshal(userResponse)
 		if err != nil {
