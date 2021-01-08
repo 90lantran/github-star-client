@@ -91,21 +91,22 @@ func (c *CustomizedClient) SendPostRequest(req *http.Request) (resp *http.Respon
 	return resp, nil
 }
 
-func ShowResponse(resp *http.Response) (err error) {
+func ShowResponse(resp *http.Response) (*UserResponse, error) {
 	var userResponse UserResponse
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	err = json.Unmarshal(body, &userResponse)
 	if err != nil {
-		return err
+		return nil, err
 	}
+
 	// pretty print json response
 	responseJSON, err := json.MarshalIndent(userResponse, "", "  ")
 	if err != nil {
-		return err
+		return nil, err
 	}
 	fmt.Printf("Response: %+v\n", string(responseJSON))
-	return nil
+	return &userResponse, nil
 }

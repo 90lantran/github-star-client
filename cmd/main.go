@@ -51,7 +51,7 @@ func main() {
 	}
 	defer resp.Body.Close()
 
-	if err = ShowResponse(resp); err != nil {
+	if _, err = ShowResponse(resp); err != nil {
 		fmt.Printf("cannot show response from server %v\n", err)
 		return
 	}

@@ -15,6 +15,18 @@ func TestValidationInputList(t *testing.T) {
 	err := ValidateListInput(list)
 	assert.NotNil(t, err)
 
+	list = []string{""}
+	err = ValidateListInput(list)
+	assert.NotNil(t, err)
+
+	list = []string{"@"}
+	err = ValidateListInput(list)
+	assert.NotNil(t, err)
+
+	list = []string{"twilio/twilio-go"}
+	err = ValidateListInput(list)
+	assert.Nil(t, err)
+
 	list = []string{"me/me"}
 	err = ValidateListInput(list)
 	assert.Nil(t, err)
@@ -23,6 +35,10 @@ func TestValidationInputList(t *testing.T) {
 func TestValidationHostAndPort(t *testing.T) {
 	host := []string{"http://127.0.0.1"}
 	err := ValidateHostAndPort(host)
+	assert.NotNil(t, err)
+
+	host = []string{"http://localhost:8080"}
+	err = ValidateHostAndPort(host)
 	assert.NotNil(t, err)
 
 	host = []string{"http://127.0.0.1:8080"}
@@ -86,8 +102,14 @@ func TestFunctionalityOfClient(t *testing.T) {
 	// Use Client & URL from our local test server
 	customizedClient := CustomizedClient{server.Client(), &server.URL}
 	resp, err := customizedClient.SendPostRequest(req)
+	assert.Equal(t, resp.Status, "200 OK")
 
-	err = ShowResponse(resp)
+	userResponse, err := ShowResponse(resp)
+	assert.Equal(t, userResponse.Status, "good")
+	assert.Equal(t, userResponse.Error, "no error")
+	assert.Equal(t, userResponse.Pl.TotalStars, int64(5))
+	assert.Equal(t, userResponse.Pl.ValidRepos, []MapNameStar([]MapNameStar{MapNameStar{Name: "golang/go", Star: 5}}))
+	assert.Equal(t, userResponse.Pl.InvalidRepos, []string([]string{"golang/o"}))
 	assert.Nil(t, err)
 
 }
