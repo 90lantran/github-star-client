@@ -21,7 +21,7 @@ type UserRequest struct {
 
 type UserResponse struct {
 	Pl     *Payload `json:"payload,omitempty"`
-	Error  string   `json:"error,omitempty"`
+	Error  []string `json:"error,omitempty"`
 	Status string   `json:"status" validate:"required"`
 }
 type Payload struct {
